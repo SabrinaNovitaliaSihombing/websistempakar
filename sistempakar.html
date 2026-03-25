@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PakarDiag | Enterprise Expert System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-hover: #1d4ed8;
+            --surface: #ffffff;
+            --bg: #f8fafc;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --danger: #ef4444;
+            --success: #10b981;
+            --footer-bg: #0f172a;
+            --footer-text: #cbd5e1;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text-main);
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* --- HEADER & NAVIGATION --- */
+        header {
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+
+        .top-bar {
+            background: var(--primary);
+            color: white;
+            text-align: center;
+            padding: 8px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 25px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-muted);
+            font-weight: 500;
+            font-size: 14px;
+            transition: 0.2s;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .nav-actions {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .badge {
+            background: #dbeafe;
+            color: var(--primary);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-login {
+            padding: 8px 18px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: var(--surface);
+            color: var(--text-main);
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .btn-login:hover {
+            background: #f1f5f9;
+        }
+
+        /* --- MAIN CONTENT --- */
+        main {
+            flex: 1;
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 0 20px;
+            width: 100%;
+        }
+
+        .hero {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .hero h1 {
+            font-size: 36px;
+            font-weight: 800;
+            margin-bottom: 12px;
+            letter-spacing: -1px;
+            color: #1e293b;
+        }
+
+        .hero p {
+            color: var(--text-muted);
+            font-size: 16px;
+            max-width: 650px;
+            margin: 0 auto;
+        }
+
+        .toolbar {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            background: var(--surface);
+            padding: 15px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+        }
+
+        .search-box {
+            flex: 1;
+            position: relative;
+            min-width: 250px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 12px 20px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            font-size: 15px;
+            outline: none;
+            transition: 0.3s;
+            background: #f8fafc;
+        }
+
+        .search-box input:focus {
+            border-color: var(--primary);
+            background: var(--surface);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .btn-reset {
+            padding: 12px 24px;
+            border: 1px solid var(--border);
+            background: var(--surface);
+            color: var(--text-muted);
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.2s;
+        }
+
+        .btn-reset:hover {
+            background: #f1f5f9;
+            color: var(--text-main);
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 16px;
+            margin-bottom: 80px;
+        }
+
+        .card {
+            background: var(--surface);
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            transition: all 0.2s ease;
+            user-select: none;
+        }
+
+        .card:hover {
+            border-color: #cbd5e1;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+        }
+
+        .checkbox-custom {
+            width: 24px;
+            height: 24px;
+            border: 2px solid var(--border);
+            border-radius: 6px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 2px;
+            transition: 0.2s;
+            flex-shrink: 0;
+            background: #f8fafc;
+        }
+
+        .card.active {
+            border-color: var(--primary);
+            background: #f0fdf4;
+            border-color: var(--success);
+        }
+
+        .card.active .checkbox-custom {
+            background: var(--success);
+            border-color: var(--success);
+        }
+
+        .card.active .checkbox-custom::after {
+            content: '✓';
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .card-content h4 {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 6px;
+        }
+
+        .card-content p {
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        .fab-container {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 600px;
+            padding: 0 20px;
+            z-index: 20;
+            pointer-events: none;
+        }
+
+        .btn-diagnose {
+            width: 100%;
+            padding: 18px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 16px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 10px 25px -5px rgba(37, 99, 235, 0.5);
+            pointer-events: auto;
+            transition: 0.3s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-diagnose:hover {
+            background: var(--primary-hover);
+            transform: translateY(-2px);
+        }
+
+        .btn-diagnose:disabled {
+            background: #94a3b8;
+            cursor: not-allowed;
+            box-shadow: none;
+            transform: none;
+        }
+
+        /* --- FOOTER --- */
+        /* PERUBAHAN DI SINI: padding bawah diubah menjadi 120px agar tidak tertutup tombol */
+        footer {
+            background: var(--footer-bg);
+            color: var(--footer-text);
+            padding: 50px 20px 120px;
+            margin-top: auto;
+        }
+
+        .footer-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-col h3 {
+            color: white;
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .footer-col p {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #94a3b8;
+            max-width: 300px;
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-col ul li a {
+            color: #94a3b8;
+            text-decoration: none;
+            font-size: 14px;
+            transition: 0.2s;
+        }
+
+        .footer-col ul li a:hover {
+            color: white;
+            padding-left: 5px;
+        }
+
+        .footer-bottom {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding-top: 20px;
+            border-top: 1px solid #334155;
+            text-align: center;
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        /* --- MODAL & OVERLAY --- */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(5px);
+            z-index: 50;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid #e2e8f0;
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90%;
+            max-width: 500px;
+            background: var(--surface);
+            border-radius: 20px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            z-index: 60;
+            padding: 30px;
+            animation: popIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes popIn {
+            0% {
+                opacity: 0;
+                transform: translate(-50%, -40%) scale(0.9);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1);
+            }
+        }
+
+        .modal-header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .modal-header h2 {
+            font-size: 24px;
+            color: var(--text-main);
+            margin-bottom: 5px;
+        }
+
+        .modal-header p {
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        .result-box {
+            background: #f8fafc;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .result-title {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            font-weight: 700;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .result-damage {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--danger);
+            margin-bottom: 15px;
+        }
+
+        .progress-container {
+            width: 100%;
+            background: #e2e8f0;
+            border-radius: 10px;
+            height: 10px;
+            overflow: hidden;
+            margin-bottom: 8px;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: var(--danger);
+            width: 0%;
+            transition: width 1s ease-in-out;
+        }
+
+        .progress-text {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-muted);
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .btn-close {
+            width: 100%;
+            padding: 14px;
+            background: #f1f5f9;
+            color: var(--text-main);
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .btn-close:hover {
+            background: #e2e8f0;
+        }
+
+        .modal-backdrop {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 23, 42, 0.6);
+            z-index: 55;
+            backdrop-filter: blur(3px);
+        }
+
+        /* Responsif HP */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .footer-container {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="top-bar">
+            Tugas AI - Sistem Pakar Matriks A1-A17 | Forward Chaining Engine
+        </div>
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path
+                        d="M20 16V7a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v9m16 0H4m16 0 1.28 2.55a1 1 0 0 1-.9 1.45H3.62a1 1 0 0 1-.9-1.45L4 16" />
+                </svg>
+                PakarDiag
+            </a>
+
+            <nav class="nav-links">
+                <a href="#" class="active">Beranda Diagnosa</a>
+                <a href="#">Basis Pengetahuan</a>
+                <a href="#">Riwayat Laporan</a>
+                <a href="#">Tentang Pakar</a>
+            </nav>
+
+            <div class="nav-actions">
+                <span class="badge">Engine: Aktif</span>
+                <button class="btn-login">Login Admin</button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="hero">
+            <h1>Analisis Perangkat Keras</h1>
+            <p>Pilih gejala yang dialami oleh komputer Anda. Sistem cerdas kami akan menganalisis matriks kerusakan
+                dengan tingkat probabilitas tertinggi secara real-time.</p>
+        </div>
+
+        <div class="toolbar">
+            <div class="search-box">
+                <input type="text" id="searchInput"
+                    placeholder="🔍 Cari gejala fisik atau sistem... (misal: layar, bunyi, mati)"
+                    onkeyup="filterGejala()">
+            </div>
+            <button class="btn-reset" onclick="resetSelection()">↺ Reset Pilihan</button>
+        </div>
+
+        <div class="grid-container" id="symptomsGrid">
+        </div>
+    </main>
+
+    <div class="fab-container">
+        <button class="btn-diagnose" id="btnDiagnose" onclick="startAnalysis()" disabled>
+            <span>Mulai Proses Analisis AI</span>
+            <span class="badge" style="background: rgba(255,255,255,0.25); color: white;" id="countBadge">0
+                Gejala</span>
+        </button>
+    </div>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-col">
+                <h3>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path
+                            d="M20 16V7a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v9m16 0H4m16 0 1.28 2.55a1 1 0 0 1-.9 1.45H3.62a1 1 0 0 1-.9-1.45L4 16" />
+                    </svg>
+                    PakarDiag
+                </h3>
+                <p>Platform Sistem Pakar berbasis web untuk mendeteksi dini kerusakan pada perangkat keras komputer.
+                    Menggunakan metode inferensi Forward Chaining untuk hasil yang akurat.</p>
+            </div>
+            <div class="footer-col">
+                <h3 style="font-size: 16px;">Tautan Navigasi</h3>
+                <ul>
+                    <li><a href="#">Beranda Diagnosa</a></li>
+                    <li><a href="#">Matriks Aturan (A1-A17)</a></li>
+                    <li><a href="#">Daftar Gejala (B1-B40)</a></li>
+                    <li><a href="#">Bantuan Penggunaan</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3 style="font-size: 16px;">Informasi Tugas</h3>
+                <ul>
+                    <li><a href="#">Mata Kuliah: Kecerdasan Buatan</a></li>
+                    <li><a href="#">Topik: Sistem Pakar (Expert System)</a></li>
+                    <li><a href="#">Studi Kasus: Kerusakan PC</a></li>
+                    <li><a href="#">Metode: Forward Chaining</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            &copy; 2026 PakarDiag Inc. | Dibuat untuk pemenuhan Tugas AI. Seluruh hak cipta dilindungi.
+        </div>
+    </footer>
+
+    <div class="overlay" id="loadingOverlay">
+        <div class="spinner"></div>
+        <h3 style="color: var(--primary);">Mesin Inferensi Bekerja...</h3>
+        <p style="color: var(--text-muted); font-size: 14px;">Mencocokkan fakta dengan basis aturan pakar</p>
+    </div>
+
+    <div class="modal-backdrop" id="modalBackdrop"></div>
+    <div class="modal" id="resultModal">
+        <div class="modal-header">
+            <h2>Laporan Analisis Pakar</h2>
+            <p>Berdasarkan perhitungan probabilitas mesin inferensi.</p>
+        </div>
+
+        <div class="result-box">
+            <span class="result-title">Indikasi Kerusakan Utama:</span>
+            <div class="result-damage" id="resDamage">A0 - TIDAK DIKETAHUI</div>
+
+            <div class="progress-container">
+                <div class="progress-bar" id="resProgress"></div>
+            </div>
+            <div class="progress-text">
+                <span>Tingkat Kepastian (Confidence)</span>
+                <span id="resPercent">0%</span>
+            </div>
+        </div>
+
+        <button class="btn-close" onclick="closeModal()">Selesai & Tutup Laporan</button>
+    </div>
+
+    <script>
+        const symptoms = [
+            { id: 'B1', title: 'Layar Monitor Gelap', desc: 'Tidak ada tampilan gambar sama sekali di layar monitor saat dinyalakan.' },
+            { id: 'B3', title: 'Tidak Ada Post BIOS', desc: 'Tampilan awal BIOS (logo motherboard) gagal muncul di layar.' },
+            { id: 'B5', title: 'Alarm Bunyi Beep', desc: 'Terdengar bunyi beep panjang atau berulang dari dalam CPU.' },
+            { id: 'B9', title: 'Harddisk Berisik', desc: 'Terdengar suara kasar (krek-krek atau klik) dari penyimpanan data.' },
+            { id: 'B11', title: 'Sistem Restart Sendiri', desc: 'Windows tiba-tiba melakukan restart otomatis tanpa peringatan error.' },
+            { id: 'B12', title: 'Blue Screen (BSOD)', desc: 'Sering muncul layar biru dengan kode error (stop code) sistem.' },
+            { id: 'B14', title: 'Layar Bergaris/Pecah', desc: 'Tampilan grafis di monitor rusak, muncul artefak, atau bergaris.' },
+            { id: 'B16', title: 'Kipas PC Tidak Berputar', desc: 'Komputer mati total, kipas prosesor dan kipas casing tidak ada respon.' },
+            { id: 'B22', title: 'Missing OS / Boot Failure', desc: 'Gagal masuk ke sistem operasi, tertulis pesan Operating System not found.' },
+            { id: 'B30', title: 'Kinerja Sangat Lambat', desc: 'Komputer lag atau macet parah saat membuka beberapa aplikasi ringan.' },
+            { id: 'B38', title: 'USB Tidak Terbaca', desc: 'Flashdisk atau perangkat yang ditancapkan ke semua port USB tidak terdeteksi.' },
+            { id: 'B40', title: 'Kursor Mouse Macet', desc: 'Kursor di layar tidak bisa digerakkan, melompat-lompat, atau tersendat.' }
+        ];
+
+        const rules = [
+            { id: 'A1', name: 'MONITOR RUSAK', triggers: ['B1'] },
+            { id: 'A2', name: 'MEMORI (RAM) RUSAK', triggers: ['B3', 'B5', 'B12'] },
+            { id: 'A3', name: 'HARDDISK (HDD) RUSAK', triggers: ['B9', 'B12', 'B22', 'B30'] },
+            { id: 'A4', name: 'VGA CARD RUSAK', triggers: ['B1', 'B14'] },
+            { id: 'A6', name: 'OS BERMASALAH (CORRUPT)', triggers: ['B11', 'B12', 'B22'] },
+            { id: 'A8', name: 'POWER SUPPLY (PSU) RUSAK', triggers: ['B11', 'B16'] },
+            { id: 'A9', name: 'PROSESOR RUSAK / OVERHEAT', triggers: ['B11', 'B16'] },
+            { id: 'A15', name: 'PERANGKAT / PORT USB RUSAK', triggers: ['B38'] },
+            { id: 'A17', name: 'MOUSE RUSAK', triggers: ['B40'] }
+        ];
+
+        let selected = new Set();
+        const grid = document.getElementById('symptomsGrid');
+        const btnDiagnose = document.getElementById('btnDiagnose');
+        const countBadge = document.getElementById('countBadge');
+        const searchInput = document.getElementById('searchInput');
+
+        function renderCards(filterText = '') {
+            grid.innerHTML = '';
+            symptoms.forEach(sym => {
+                if (sym.title.toLowerCase().includes(filterText.toLowerCase()) || sym.desc.toLowerCase().includes(filterText.toLowerCase()) || sym.id.toLowerCase().includes(filterText.toLowerCase())) {
+                    const card = document.createElement('div');
+                    card.className = `card ${selected.has(sym.id) ? 'active' : ''}`;
+                    card.onclick = () => toggleSelect(sym.id, card);
+                    card.innerHTML = `<div class="checkbox-custom"></div><div class="card-content"><h4>${sym.id} - ${sym.title}</h4><p>${sym.desc}</p></div>`;
+                    grid.appendChild(card);
+                }
+            });
+        }
+
+        function toggleSelect(id, cardElement) {
+            if (selected.has(id)) {
+                selected.delete(id);
+                cardElement.classList.remove('active');
+            } else {
+                selected.add(id);
+                cardElement.classList.add('active');
+            }
+            updateButton();
+        }
+
+        function updateButton() {
+            countBadge.innerText = `${selected.size} Gejala`;
+            btnDiagnose.disabled = selected.size === 0;
+        }
+
+        function filterGejala() { renderCards(searchInput.value); }
+        function resetSelection() { selected.clear(); searchInput.value = ''; renderCards(); updateButton(); }
+
+        function startAnalysis() {
+            document.getElementById('loadingOverlay').style.display = 'flex';
+            setTimeout(() => {
+                document.getElementById('loadingOverlay').style.display = 'none';
+
+                let bestMatch = { id: 'A0', name: 'TIDAK DIKETAHUI', score: 0 };
+                let userSymptoms = Array.from(selected);
+
+                rules.forEach(rule => {
+                    let matchCount = 0;
+                    rule.triggers.forEach(trigger => { if (userSymptoms.includes(trigger)) matchCount++; });
+                    let score = (matchCount / rule.triggers.length) * 100;
+                    if (score > bestMatch.score) { bestMatch = { id: rule.id, name: rule.name, score: score }; }
+                });
+
+                if (bestMatch.score === 0) { bestMatch = { id: 'A?', name: 'GEJALA TIDAK SPESIFIK. BUTUH PEMERIKSAAN FISIK TEKNISI.', score: 10 }; }
+
+                document.getElementById('resDamage').innerText = `${bestMatch.id} - ${bestMatch.name}`;
+                document.getElementById('resPercent').innerText = `${Math.round(bestMatch.score)}%`;
+
+                const progressBar = document.getElementById('resProgress');
+                progressBar.style.width = '0%';
+                progressBar.style.background = bestMatch.score > 70 ? 'var(--danger)' : (bestMatch.score > 40 ? '#f59e0b' : '#3b82f6');
+
+                document.getElementById('modalBackdrop').style.display = 'block';
+                document.getElementById('resultModal').style.display = 'block';
+
+                setTimeout(() => { progressBar.style.width = `${bestMatch.score}%`; }, 200);
+            }, 1200);
+        }
+
+        function closeModal() {
+            document.getElementById('modalBackdrop').style.display = 'none';
+            document.getElementById('resultModal').style.display = 'none';
+        }
+
+        renderCards();
+    </script>
+</body>
+
+</html>
